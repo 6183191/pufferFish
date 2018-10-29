@@ -1,5 +1,10 @@
 addpath(genpath('source'));
 
-a = dir("res/images");
+imagesDir = "res/images";
 
-a = 
+a = dir(imagesDir);
+
+a = {a.name};
+
+a = a(3:end);
+
