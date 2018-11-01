@@ -36,7 +36,7 @@ B=mat2gray(B,[0 255]);
     else
 	decibels = 20*log10(1/(sqrt(mean(mean(ew.^2)))));
     end;
-	disp(sprintf('WPSNR = +%5.2f dB',decibels))
-	%f=decibels;
+	%disp(sprintf('WPSNR = +%5.2f dB',decibels))
+	f=decibels;
 
 
