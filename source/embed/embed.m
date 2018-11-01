@@ -1,4 +1,4 @@
-function [watImage] = embed(resource, watermarkResource, alpha, S)
+function [watImage] = embed(resource, watermarkResource, alpha, S, watSize)
 %get image
     image.file = imread(resource);
     [image.x, image.y] = size(image.file);
@@ -15,7 +15,7 @@ function [watImage] = embed(resource, watermarkResource, alpha, S)
     
 %apply watermark
     watImage = reshape(image.double, 1, image.x*image.y);
-    for i = 1:watermark.size
+    for i = 1:(watermark.size * watSize)
         index = entropy.indexes(i);
         pixel = watImage(index);
         pixelEntropy = entropy.sorted(i);
@@ -24,7 +24,11 @@ function [watImage] = embed(resource, watermarkResource, alpha, S)
             entropyStrength = -1 * entropyStrength;
         end
         strength = entropyStrength * alpha ;
-        watImage(index) = pixel + (strength * watermark.flat(i) * pixel);
+        watIndex = mod(i, watermark.size);
+        if watIndex == 0
+            watIndex = 1024;
+        end
+        watImage(index) = pixel + (strength * watermark.flat(watIndex) * pixel);
     end
     watImage = reshape(watImage, image.x, image.y);
     watImage = uint8(watImage);

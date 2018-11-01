@@ -1,4 +1,4 @@
-function [detected, wpsnr] = detect(resource, watermarked, attacked, alpha)
+function [detected, wpsnr] = detect(resource, watermarked, attacked, alpha, S, watSize)
 %get resImages
     resImage.file = imread(resource);
     [resImage.x, resImage.y] = size(resImage.file);
@@ -18,13 +18,13 @@ function [detected, wpsnr] = detect(resource, watermarked, attacked, alpha)
     attImage.flat = reshape(attImage.double, 1, attImage.x * attImage.y);
     
 %get entropy
-    entropy = filterEntropy(resImage);
+    entropy = filterEntropy(resImage, S);
     
 %watermark from watermarked
-    watWat = getWatermark(resImage, entropy, watImage, alpha);
+    watWat = getWatermark(resImage, entropy, watImage, alpha, watSize);
 
 %watermark from attacked
-    attWat = getWatermark(resImage, entropy, attImage, alpha);
+    attWat = getWatermark(resImage, entropy, attImage, alpha, watSize);
 
 %similarity with original watermark
     randomWatermarks = round(rand(1000, 1024));
@@ -35,6 +35,8 @@ function [detected, wpsnr] = detect(resource, watermarked, attacked, alpha)
         sim(n) = attWat.*randomWatermarks(n,:)/sqrt(attWat.*attWat);
     end
     
+    
+    
     x = 1:1000;
     plot(x, sim);
     
@@ -44,8 +46,9 @@ function [detected, wpsnr] = detect(resource, watermarked, attacked, alpha)
         ss=sorted(2)*(0.9);
     end
     if(sim(500)>ss)
-        fprintf('true\n');
+        detected = 1;
     else
-        fprintf('false\n');
+        detected = 0;
     end
+    wpsnr = WPSNR(watImage.file, attImage.file);
 end
