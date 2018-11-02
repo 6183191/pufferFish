@@ -9,13 +9,13 @@ imagesDir = "images/";
  images = images';
 [x,y] = size(images);
 results = zeros(x, 2);
-for i = 1:size(images)
+for i = 1:7%size(images)
     watermarked = embedding(images(i));
     attacked=watermarked;
     
     %mettere qui attacchi o tecnica di attacco
-    attacked    = test_blur(attacked,1.6);
-    %attacked=test_jpeg(attacked, 9);
+    %attacked    = test_blur(attacked,1.6);
+    attacked=test_jpeg(attacked, 25);
     %attacked=test_resize(attacked,0.4375);
     
     
@@ -23,6 +23,7 @@ for i = 1:size(images)
     attackedPath=fullfile(n+"_attacked"+e);
     watermarkedPath=fullfile(n+"_pufferfish"+e);
     imwrite(uint8(attacked),attackedPath);
+    
 
     [results(i, 1), results(i, 2)]  = detection(images(i), watermarkedPath, attackedPath);
 end

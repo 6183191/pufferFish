@@ -18,20 +18,20 @@ It_mod = abs(It_re);
 Iatt_re = dct2(double(Iatt));
 Iatt_re = abs(reshape(Iatt_re,1,512*512));
 [It_sort, Ix]=sort(It_mod,'descend');
-alpha=5.5;  %intensità DCT
+alpha=0.1;  %intensità DCT
 markTresh=58;   %treshold punteggio
 
 %funzione che cerca il valore k migliore
 kfin=0;
 min=100;
 max=0;
-k = 50000;
+k = 100;
 for f=1:30
     Itw2_mod = It_mod; 
     h=k;
     for j = 1:nValues
     	m = Ix(h);
-        Itw2_mod(m) = It_mod(m)*(alpha);
+        Itw2_mod(m) = It_mod(m)*(alpha+1);
         h = h+1;
     end
     It_new = Itw2_mod.*It_sgn;
@@ -42,16 +42,16 @@ for f=1:30
         max=wpsnr;
         maxk=k;
     end
-    if(wpsnr>=markTresh)
+    if(wpsnr>=markTresh-3)
         if(wpsnr<min)
             kfin=k;
         	break;
         end
     end
-    if((((markTresh-max)*1000))<5)
+    if((((markTresh-max)*100))<5)
     	k=k+5;
     else
-        k=round(k+((markTresh-max)*1000));
+        k=round(k+((markTresh-max)*100));
     end 
     if(k>262144)
        break; 
@@ -71,33 +71,18 @@ for j = 1:1024
 	k=k+1;
 end
 
-%creo watermark casuali
-rng(7);
-w_new=zeros(1000,1024);
-for n = 1:49
-    w_new(n,:) = round(rand(1,1024));
-end
-w_new(50,:) = original_w;
-for n =51:1000
-    w_new(n,:) = round(rand(1,1024));
-end
 
-%calcolo similarità tra watermark attaccato e watermark casuali e originale
-sim=zeros(1,1000);
-for n = 1:1000
-    sim(n) = extracted_w.*w_new(n,:)/sqrt(extracted_w.*extracted_w);
-end
+
+
+simAtt = original_w.*extracted_w/sqrt(original_w.*original_w);
+
 
 %calcolo treshold e controllo se il watermark è stato rilevato
 wpsnr=WPSNR(uint8(I_wat),uint8(Iatt));
-sorted=sort(sim,'descend');
-ss=sorted(2)*(1.1);
-if(sorted(2)<0)
-	ss=sorted(2)*(0.9);
-end
+
 
 %restituisce se il watermark è stato rilevato
-if(sim(50)>=ss)
+if(simAtt>=0.625)
 	detected=1;
 else
 	detected=0;

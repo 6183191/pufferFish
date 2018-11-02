@@ -12,7 +12,7 @@ w = w.w;
 w = reshape(w, 1, nValues);
 
 %converte immagine in DCT
-alpha = 5.5;    %intensità DCT
+alpha = 0.1;    %intensità DCT
 markTresh=58;   %treshold punteggio
 It = dct2(Id);
 It_re = reshape(It,1,dimx*dimy);
@@ -25,13 +25,13 @@ Itw_mod = It_mod;
 kfin=0;
 min=100;
 max=0;
-k = 50000;
+k = 100;
 for f=1:30
 	Itw2_mod = It_mod; 
     h=k;
     for j = 1:nValues
     	m = Ix(h);
-        Itw2_mod(m) = It_mod(m)*(alpha);
+        Itw2_mod(m) = It_mod(m)*(alpha+1);
         h = h+1;
     end
     It_new = Itw2_mod.*It_sgn;
@@ -39,19 +39,19 @@ for f=1:30
     I_inv2 = idct2(It_newi);
     wpsnr=WPSNR(uint8(I_inv2),uint8(Id));
     if(wpsnr>max)
-    	max=wpsnr;
+        max=wpsnr;
         maxk=k;
     end
-    if(wpsnr>=markTresh)
+    if(wpsnr>=markTresh-3)
         if(wpsnr<min)
             kfin=k;
             break;
         end
     end
-    if((((markTresh-max)*1000))<5)
+    if((((markTresh-max)*100))<5)
     	k=k+5;
     else
-        k=round(k+((markTresh-max)*1000));
+        k=round(k+((markTresh-max)*100));
     end 
     if(k>262144)
        break; 
@@ -81,6 +81,7 @@ imwrite(embeddedImage,nf);
 
 %calcolo wpsnr (solo debug)
 wpsnr=WPSNR(embeddedImage,I);
+
 
 end
 
