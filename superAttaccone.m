@@ -16,6 +16,9 @@ image.watermarked = imread(image.path.watermarked);
 image.attacksBoundaries.precision = 1;
 image.attacksBoundaries.values = getAttacksBoundaries(image);
 
+plot(1:size(image.attacksBoundaries.values), image.attacksBoundaries.values(:, 1));
+
+%{
 disp("multi attack");
 
 set = @(x)setAux(x, image);
@@ -46,3 +49,4 @@ function [watFound, wpsnr] = setAux(power, image)
     imwrite(multiAttack(image, power), image.path.attacked, "bmp");
     [watFound, wpsnr] = detectionProf(image.path.original, image.path.watermarked, image.path.attacked);
 end
+%}
