@@ -9,7 +9,7 @@ imagesDir = "images/";
  images = images';
 [x,y] = size(images);
 results = zeros(x, 2);
-for i = 1:7%size(images)
+for i = 1:size(images)
     watermarked = embedding(images(i));
     attacked=watermarked;
     

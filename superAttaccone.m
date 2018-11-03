@@ -2,13 +2,19 @@ clear;
 addpath(genpath('attacks'));
 addpath(genpath('libraries'));
 
-image.name = "indiano.bmp";
+image.name = "africana.bmp";
 
 disp(["image: ", image.name]);
+    
+[p,n,e]=fileparts(image.name);
+attackedPath=fullfile(n+"_attacked"+e);
+watermarkedPath=fullfile(n+"_pufferfish"+e);
 
 image.path.original = strcat("images/", image.name);
-image.path.watermarked = strcat("watermarkedProf/", image.name);
-image.path.attacked = strcat("attacked/", image.name);
+image.path.watermarked = watermarkedPath;
+image.path.attacked = attackedPath;
+
+embedding(image.path.original);
 
 image.original = imread(image.path.original);
 image.watermarked = imread(image.path.watermarked);

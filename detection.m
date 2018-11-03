@@ -1,5 +1,4 @@
 function [detected,wpsnr] = detection(Iorig,I_wat,Iatt)
-
 Iorig=imread(Iorig);
 I_wat=imread(I_wat);
 Iatt=imread(Iatt);
@@ -18,14 +17,14 @@ It_mod = abs(It_re);
 Iatt_re = dct2(double(Iatt));
 Iatt_re = abs(reshape(Iatt_re,1,512*512));
 [It_sort, Ix]=sort(It_mod,'descend');
-alpha=0.1;  %intensità DCT
+alpha=0.7;  %intensità DCT
 markTresh=58;   %treshold punteggio
 
 %funzione che cerca il valore k migliore
 kfin=0;
 min=100;
 max=0;
-k = 100;
+k = 300;
 for f=1:30
     Itw2_mod = It_mod; 
     h=k;
@@ -48,10 +47,10 @@ for f=1:30
         	break;
         end
     end
-    if((((markTresh-max)*100))<5)
+    if((((markTresh-max)*50))<5)
     	k=k+5;
     else
-        k=round(k+((markTresh-max)*100));
+        k=round(k+((markTresh-max)*50));
     end 
     if(k>262144)
        break; 
@@ -87,6 +86,5 @@ if(simAtt>=0.625)
 else
 	detected=0;
 end
-
 end
 

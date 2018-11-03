@@ -12,7 +12,7 @@ w = w.w;
 w = reshape(w, 1, nValues);
 
 %converte immagine in DCT
-alpha = 0.1;    %intensità DCT
+alpha = 0.7;    %intensità DCT
 markTresh=58;   %treshold punteggio
 It = dct2(Id);
 It_re = reshape(It,1,dimx*dimy);
@@ -25,7 +25,7 @@ Itw_mod = It_mod;
 kfin=0;
 min=100;
 max=0;
-k = 100;
+k = 300;
 for f=1:30
 	Itw2_mod = It_mod; 
     h=k;
@@ -48,10 +48,10 @@ for f=1:30
             break;
         end
     end
-    if((((markTresh-max)*100))<5)
+    if((((markTresh-max)*50))<5)
     	k=k+5;
     else
-        k=round(k+((markTresh-max)*100));
+        k=round(k+((markTresh-max)*50));
     end 
     if(k>262144)
        break; 
