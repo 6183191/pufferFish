@@ -13,6 +13,6 @@ function attackedImage = multiAttack(image, power)
         attackPower = power * boundaryPower;
         attackedImage = attackedImage + double(attack.action(image.watermarked, attackPower));
     end
-    attackedImage = uint8(attackedImage/4);
+    attackedImage = uint8(attackedImage/size(attacks));
 end
 

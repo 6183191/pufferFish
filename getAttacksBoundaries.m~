@@ -30,9 +30,8 @@ function boundaries = getAttacksBoundaries(image)
                 lostState = tempState;
             end
             if cputime-start > 5
-                tempPrecision = tempPrecision + 1;
-                disp("precision increased by 1 due to exceeding time");
-                disp(["actual precision: ", tempPrecision]);
+                tempPrecision = tempPrecision * 2;
+                disp("precision d");
             end
         end
         
