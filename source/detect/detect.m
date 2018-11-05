@@ -27,28 +27,43 @@ function [detected, wpsnr] = detect(resource, watermarked, attacked, alpha, S, w
     attWat = getWatermark(resImage, entropy, attImage, alpha, watSize);
 
 %similarity with original watermark
-    randomWatermarks = round(rand(1000, 1024));
-    randomWatermarks(500, :) = watWat;
-    
-    sim=zeros(1,1000);
-    for n = 1:1000
-        sim(n) = attWat.*randomWatermarks(n,:)/sqrt(attWat.*attWat);
-    end
-    
-    
-    
-    x = 1:1000;
-    plot(x, sim);
-    
-    sorted=sort(sim,'descend');
-    ss=sorted(2)*(1.1);
-    if(sorted(2)<0)
-        ss=sorted(2)*(0.9);
-    end
-    if(sim(500)>ss)
-        detected = 1;
-    else
-        detected = 0;
-    end
+
+
+
+
+sim = watWat.*attWat/sqrt(watWat.*watWat);
+
+if sim > 0.6323
+    detected = 1
+else
+    detected = 0;
+end
+
+
+
+
+%     randomWatermarks = round(rand(1000, 1024));
+%     randomWatermarks(500, :) = attWat;
+%     
+%     sim=zeros(1,1000);
+%     for n = 1:1000
+%         sim(n) = watWat.*randomWatermarks(n,:)/sqrt(watWat.*watWat);
+%     end
+%     
+%     
+%     
+%     x = 1:1000;
+%     plot(x, sim);
+%     
+%     sorted=sort(sim,'descend');
+%     ss=sorted(2)*(1.1);
+%     if(sorted(2)<0)
+%         ss=sorted(2)*(0.9);
+%     end
+%     if(sim(500)>ss)
+%         detected = 1;
+%     else
+%         detected = 0;
+%     end
     wpsnr = WPSNR(watImage.file, attImage.file);
 end
