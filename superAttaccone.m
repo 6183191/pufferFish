@@ -15,9 +15,10 @@ image.attacksBoundaries.values = getAttacksBoundaries(image);
 
 [sortedBoundaries, boundariesIndexes] = sortrows(image.attacksBoundaries.values, 1, "descend");
 
+
 wpsnr = sortedBoundaries(1,1);
 attack = boundariesIndexes(1);
-power = sortedBoundaries(2,1);
+power = sortedBoundaries(1,2);
 
 %plot(1:size(image.attacksBoundaries.values), image.attacksBoundaries.values(:, 1));
 
