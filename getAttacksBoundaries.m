@@ -1,6 +1,7 @@
 function boundaries = getAttacksBoundaries(image)
     attacks = attackFunctions();
-    boundaries = zeros(4, 2);
+    [x, y] = size(attacks);
+    boundaries = zeros(x, 2);
     for i = 1:size(attacks)
         attack = attacks{i};
         
@@ -29,10 +30,12 @@ function boundaries = getAttacksBoundaries(image)
             else
                 lostState = tempState;
             end
-            if cputime-start > 5
+            if cputime-start > 30
                 tempPrecision = tempPrecision + 1;
                 disp("precision increased by 1 due to exceeding time");
                 disp(["actual precision: ", tempPrecision]);
+                foundState.wpsnr
+                lostState.wpsnr
             end
         end
         

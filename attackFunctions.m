@@ -25,5 +25,16 @@ function attacks = attackFunctions()
     resize.info = "resize";
     attacks{4} = resize;
     
+    for i = 1:size(attacks)
+        attacks{i}.getRealPower = @(x)attacks{i}.min+power*(attacks{i}.max-attacks{i}.min);
+    end
+    
+%     
+%     median.max = 10;
+%     median.min = 1;
+%     median.action = @(image, power)test_median(image, round(median.min+power*(median.max-median.min)), round(median.min+power*(median.max-median.min)));
+%     median.info = "median";
+%     attacks{5} = median;
+%     
 end
 

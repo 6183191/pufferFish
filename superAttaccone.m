@@ -1,8 +1,5 @@
-clear;
-addpath(genpath('attacks'));
-addpath(genpath('libraries'));
-
-image.name = "casa.bmp";
+function [wpsnr, attack, power] = superAttaccone(imName)
+image.name = imName;
 
 disp(["image: ", image.name]);
 
@@ -16,7 +13,13 @@ image.watermarked = imread(image.path.watermarked);
 image.attacksBoundaries.precision = 1;
 image.attacksBoundaries.values = getAttacksBoundaries(image);
 
-plot(1:size(image.attacksBoundaries.values), image.attacksBoundaries.values(:, 1));
+[sortedBoundaries, boundariesIndexes] = sortrows(image.attacksBoundaries.values, 1, "descend");
+
+wpsnr = sortedBoundaries(1,1);
+attack = boundariesIndexes(1);
+power = sortedBoundaries(2,1);
+
+%plot(1:size(image.attacksBoundaries.values), image.attacksBoundaries.values(:, 1));
 
 %{
 disp("multi attack");
@@ -50,3 +53,4 @@ function [watFound, wpsnr] = setAux(power, image)
     [watFound, wpsnr] = detectionProf(image.path.original, image.path.watermarked, image.path.attacked);
 end
 %}
+end
