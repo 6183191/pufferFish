@@ -44,6 +44,6 @@ function boundaries = getAttacksBoundaries(image)
     
     function [watFound, wpsnr] = setAux(power, image, attack)
         imwrite(attack.action(image.watermarked, power), image.path.attacked, "bmp");
-        [watFound, wpsnr] = detectionProf(image.path.original, image.path.watermarked, image.path.attacked);
+        [watFound, wpsnr] = detection_virtualcrazycucumber(image.path.original, image.path.watermarked, image.path.attacked);
     end
 end

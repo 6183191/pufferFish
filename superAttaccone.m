@@ -1,6 +1,8 @@
 function [wpsnr, attack, power] = superAttaccone(imName)
 image.name = imName;
 
+attacks = attackFunctions();
+
 disp(["image: ", image.name]);
 
 image.path.original = strcat("images/", image.name);
@@ -19,6 +21,8 @@ image.attacksBoundaries.values = getAttacksBoundaries(image);
 wpsnr = sortedBoundaries(1,1);
 attack = boundariesIndexes(1);
 power = sortedBoundaries(1,2);
+
+%attackedFinally = attacks{attack}.action(image.watermarked);
 
 %plot(1:size(image.attacksBoundaries.values), image.attacksBoundaries.values(:, 1));
 
