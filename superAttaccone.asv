@@ -2,7 +2,7 @@ clear;
 addpath(genpath('attacks'));
 addpath(genpath('libraries'));
 
-image.name = "bridge.bmp";
+image.name = "br.bmp";
 
 disp(["image: ", image.name]);
     
