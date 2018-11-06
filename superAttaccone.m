@@ -5,7 +5,7 @@ disp(["image: ", image.name]);
 
 image.path.original = strcat("images/", image.name);
 image.path.watermarked = strcat("watermarkedProf/", image.name);
-image.path.attacked = strcat("attacked/", image.name);
+image.path.attacked = strcat("attacked/pufferfish_", image.name);
 
 image.original = imread(image.path.original);
 image.watermarked = imread(image.path.watermarked);
