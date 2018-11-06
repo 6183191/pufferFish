@@ -22,9 +22,9 @@ wpsnr = sortedBoundaries(1,1);
 attack = boundariesIndexes(1);
 power = sortedBoundaries(1,2);
 
-attackedFinally = attacks{attack}.action(image.watermarked, power);
+attackedFinally = attacks{attack}.action(image.watermarked, image.path.attacked, );
 
-imwrite(attackedFinally, image.path.attacked, "bmp");
+imwrite();
 
 %plot(1:size(image.attacksBoundaries.values), image.attacksBoundaries.values(:, 1));
 
