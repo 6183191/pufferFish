@@ -1,5 +1,7 @@
-function [outputArg1,outputArg2] = threshold(inputArg1,inputArg2)
+function [ss] = threshold(original_w)
 
+
+nValues=1024;
 %creo watermark casuali
 w = open("pufferfish.mat");
 w = w.w;

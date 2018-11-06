@@ -25,7 +25,7 @@ for i = 1:size(images)
     imwrite(uint8(attacked),attackedPath);
     
 
-    [results(i, 1), results(i, 2)]  = detection(images(i), watermarkedPath, attackedPath);
+    [results(i, 1), results(i, 2)]  = detection_pufferfish(images(i), watermarkedPath, attackedPath);
 end
 
 results

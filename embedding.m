@@ -12,7 +12,7 @@ w = w.w;
 w = reshape(w, 1, nValues);
 
 %converte immagine in DCT
-alpha = 0.7;    %intensità DCT
+alpha = 0.5;    %intensità DCT
 markTresh=58;   %treshold punteggio
 It = dct2(Id);
 It_re = reshape(It,1,dimx*dimy);

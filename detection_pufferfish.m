@@ -1,4 +1,4 @@
-function [detected,wpsnr] = detection(Iorig,I_wat,Iatt)
+function [detected,wpsnr] = detection_pufferfish(Iorig,I_wat,Iatt)
 Iorig=imread(Iorig);
 I_wat=imread(I_wat);
 Iatt=imread(Iatt);
@@ -17,7 +17,7 @@ It_mod = abs(It_re);
 Iatt_re = dct2(double(Iatt));
 Iatt_re = abs(reshape(Iatt_re,1,512*512));
 [It_sort, Ix]=sort(It_mod,'descend');
-alpha=0.7;  %intensità DCT
+alpha=0.5;  %intensità DCT
 markTresh=58;   %treshold punteggio
 
 %funzione che cerca il valore k migliore
@@ -80,8 +80,12 @@ simAtt = original_w.*extracted_w/sqrt(original_w.*original_w);
 wpsnr=WPSNR(uint8(I_wat),uint8(Iatt));
 
 
+%da rimuovere!!
+%ss=threshold(original_w);
+
+
 %restituisce se il watermark è stato rilevato
-if(simAtt>=0.625)
+if(simAtt>=0.644)
 	detected=1;
 else
 	detected=0;
